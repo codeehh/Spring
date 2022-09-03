@@ -44,3 +44,30 @@ or
 ./gradlew clean build
 ```
 
+#### 2-1
+
+웹개발 종류
+
+1. 정적 컨텐츠
+2. MVC와 템플릿 엔진
+3. API
+
+정적 컨텐츠
+
+- static 폴더에 html 생성
+- localhost:8080/파일명.html
+
+#### 2-2
+
+MVC와 템플릿 엔진
+
+- @RequestParam("") : 요청 변수 매핑
+- model에 담아서 html에서 사용
+
+#### 2-3
+
+API
+
+- @ResponseBody : http body에 담아서 반환(Json으로 반환하는게 기본)
+- viewResolver 대신에 HttpMessageConverter가 동작(문자는 그대로, 객체는 Json으로 변환함)
+
