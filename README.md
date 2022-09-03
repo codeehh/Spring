@@ -71,3 +71,32 @@ API
 - @ResponseBody : http body에 담아서 반환(Json으로 반환하는게 기본)
 - viewResolver 대신에 HttpMessageConverter가 동작(문자는 그대로, 객체는 Json으로 변환함)
 
+#### 3-1
+
+#### 3-2
+
+Optional<class> : Java 8에서 생긴 기능, NullPointerException 처리하려고 Optional로 감싸서 반환
+
+실무에서는 동시성 문제때문에 공유되는 변수는 ConcurrentHashMap 사용
+
+람다식, 함수형 인터페이스, stream 도 쓰임
+
+#### 3-3
+
+테스트 매우 중요
+
+TDD : 테스트를 먼저 작성하고 개발하는 방식
+
+Assertions로 검증
+
+@Test : 테스트 메소드에 붙임
+
+@AfterEach : 각각의 메소드가 끝날때마다 실행됨
+
+#### 3-4
+
+Repository 메소드는 기능적으로, Service 메소드는 비즈니스적으로 이름짓기
+
+#### 3-5
+
+테스트는 //given, //when, //then 으로 구분해서 작성하는게 좋음
