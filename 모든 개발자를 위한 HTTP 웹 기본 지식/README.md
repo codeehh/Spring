@@ -78,7 +78,9 @@ URN은 거의 안쓰이고 URL과 URI는 거의 같은 의미로 쓰임
 
 11. 웹 브라우저 HTML 렌더링
 
-#### 2-3 모든 것이 HTTP
+### 3. HTTP 기본
+
+#### 3-1 모든 것이 HTTP
 
 HTTP(HyperText Transfer Protocol) : HTML, TEXT 뿐만 아니라 IMAGE, 음성, 영상, 파일, JSON, XML 등 거의 모든 형태의 데이터 전송 가능
 
@@ -88,23 +90,23 @@ HTTP/2 : 성능 개선
 
 HTTP/3 진행중 : TCP 대신 UDP 사용, 성능 개선
 
-#### 2-4 클라이언트 서버 구조
+#### 3-2 클라이언트 서버 구조
 
-#### 2-5 Stateful, Stateless
+#### 3-3 Stateful, Stateless
 
 최대한 stateless로 설계하고 어쩔수없는 부분(로그인 등)만 stateful로 설계
 
-#### 2-6 비 연결성(connectionless)
+#### 3-4 비 연결성(connectionless)
 
-#### 2-7 HTTP 메시지
+#### 3-5 HTTP 메시지
 
 <img src="assets/image-20220919144848093.png" alt="image-20220919144848093" style="zoom:50%;" />
 
-### 3. HTTP 메서드
+### 4. HTTP 메서드
 
-#### 3-1 HTTP API를 만들어보자
+#### 4-1 HTTP API를 만들어보자
 
-#### 3-2 HTTP 메서드 - GET, POST
+#### 4-2 HTTP 메서드 - GET, POST
 
 GET 요청은 캐싱을 해서 조회는 웬만하면 GET으로
 
@@ -114,7 +116,7 @@ POST
 - 요청 데이터 처리
 - 다른 메서드로 처리하기 애매한 경우
 
-#### 3-3 HTTP 메서드 - PUT, PATCH, DELETE
+#### 4-3 HTTP 메서드 - PUT, PATCH, DELETE
 
 PUT : 리소스가 있으면 대체, 없으면 생성
 
@@ -122,7 +124,7 @@ PATCH : 리소스 부분 변경(PUT은 완전히 대체해버림 부분변경 x)
 
 DELETE : 리소스 삭제
 
-#### 3-4 HTTP 메서드의 속성
+#### 4-4 HTTP 메서드의 속성
 
 안전(Safe) : 호출해도 리소스를 변경하지 않는다
 
@@ -141,3 +143,48 @@ DELETE : 리소스 삭제
 - GET, HEAD, POST, PATCH 캐시가능
 - 실제로는 GET, HEAD 정도만 캐시로 사용
 - POST, PATCH는 본문 내용까지 캐시 키로 고려해야 하는데, 구현이 쉽지않음
+
+### 5. HTTP 메서드 활용
+
+#### 5-1 클라이언트에서 서버로 데이터 전송
+
+#### 5-2 HTTP API 설계 예시
+
+컬렉션 vs 스토어
+
+컬렉션
+
+- POST 기반 등록(서버가 새로 등록된 리소스 URI를 생성해준다)
+
+  ex) POST /members
+
+스토어
+
+- PUT 기반 등록(클라이언트가 직접 리소스의 URI를 지정한다)
+
+  ex) PUT /files/star.jpg
+
+컬렉션을 많이 사용함
+
+API 설계는 리소스와 메서드로 최대한 해결하고 안되면 컨트롤 URI를 씀
+
+### 6. HTTP 상태코드
+
+#### 6-1 HTTP 상태코드 소개
+
+- 1xx (Informational): 요청이 수신되어 처리중
+- 2xx (Successful): 요청 정상 처리
+- 3xx (Redirection): 요청을 완료하려면 추가 행동이 필요
+- 4xx (Client Error): 클라이언트 오류, 잘못된 문법등으로 서버가 요청을 수행할 수 없음
+- 5xx (Server Error): 서버 오류, 서버가 정상 요청을 처리하지 못함
+
+#### 6-2 2xx - 성공
+
+#### 6-3 3xx - 리다이렉션1
+
+#### 6-4 3xx - 리다이렉션2
+
+#### 6-5 4xx - 클라이언트 오류, 5xx - 서버 오류
+
+
+
