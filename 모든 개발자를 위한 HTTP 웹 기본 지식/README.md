@@ -186,5 +186,103 @@ API 설계는 리소스와 메서드로 최대한 해결하고 안되면 컨트�
 
 #### 6-5 4xx - 클라이언트 오류, 5xx - 서버 오류
 
+### 7. HTTP 헤더1 - 일반 헤더
 
+#### 7-1 HTTP 헤더 개요
 
+#### 7-2 표현
+
+#### 7-3 콘텐츠 협상
+
+#### 7-4 전송 방식
+
+1. 단순 전송(Content-Length)
+2. 압축 전송(Content-Encoding)
+3. 분할 전송(Transfer-Encoding)
+4. 범위 전송(Range, Content-Range)
+
+#### 7-5 일반 정보
+
+From : 유저 에이전트의 이메일 정보
+
+Referer : 이전 웹 페이지 주소(유입 경로 분석 가능)
+
+User-Agent : 유저 에이전트 애플리케이션 정보
+
+Server : 요청을 처리하는 ORIGIN 서버의 소프트웨어 정보
+
+Date : 메세지가 발생한 날짜와 시간
+
+#### 7-6 특별한 정보
+
+Host : 요청한 호스트 정보(도메인)
+
+Location : 페이지 리다이렉션
+
+Allow : 허용 가능한 HTTP 메서드
+
+Retry-After : 유저 에이전트가 다음 요청을 하기까지 기다려야 하는 시간
+
+#### 7-7 인증
+
+#### 7-8 쿠키
+
+사용처
+
+- 사용자 로그인 세션 관리
+- 광고 정보 트래킹
+
+네트워크 트래픽 추가 유발
+
+$\to$ 최소한의 정보만 사용(세션 id, 인증 토큰)
+
+서버에 전송하지 않고, 웹 브라우저 내부에 데이터를 저장하고 싶으면 웹 스토리지 (localStorage, sessionStorage) 참고
+
+보안에 민감한 데이터는 저장하면 안됨(주민번호, 신용카드 번호 등등)
+
+### 8. HTTP 헤더2 - 캐시와 조건부 요청
+
+#### 8-1 캐시 기본 동작
+
+캐시 적용
+
+- 캐시 덕분에 캐시 가능 시간동안 네트워크를 사용하지 않아도 된다
+- 비싼 네트워크 사용량을 줄일 수 있다
+- 브라우저 로딩 속도가 매우 빠르다
+- 빠른 사용자 경험
+
+#### 8-2 검증 헤더와 조건부 요청1
+
+캐시 유효 시간이 초과해도 서버의 데이터가 갱신되지 않았으면(Last-Modified로  확인) 304 Not Modified + 헤더 메타 정보만 응답(바디 x)
+
+개발자 도구 Network 목록에 배경이 연한 목록은 캐시에서 불러온 것
+
+#### 8-3 검증 헤더와 조건부 요청2
+
+If-Modified-Since: Last-Modified 사용
+
+If-None-Match: ETag 사용
+
+#### 8-4 캐시와 조건부 요청 헤더
+
+Cache-Control
+
+- Cache-Control: max-age : 캐시 유효 시간, 초 단위
+- Cache-Control: no-cache : 데이터는 캐시해도 되지만, 항상 원(origin) 서버에 검증하고 사용
+- Cache-Control: no-store : 데이터에 민감한 정보가 있으므로 저장하면 안됨 (메모리에서 사용하고 최대한 빨리 삭제
+
+#### 8-5 프록시 캐시
+
+Cache-Control
+
+- Cache-Control: public : 응답이 public 캐시에 저장되어도 됨
+- Cache-Control: private : 응답이 해당 사용자만을 위한 것임, private 캐시에 저장해야 함(기본값)
+- Cache-Control: s-maxage : 프록시 캐시에만 적용되는 max-age
+- Age: 60 (HTTP 헤더) : 오리진 서버에서 응답 후 프록시 캐시 내에 머문 시간(초)
+
+#### 8-6 캐시 무효화
+
+웹 브라우저에서 임의로 캐시를 적용할 수도 있기 때문에 캐시 못하게 하는 설정
+
+- Cache-Control: no-cache, no-store, must-revalidate
+- Pragma: no-cache(HTTP 1.0 하위 호환)
