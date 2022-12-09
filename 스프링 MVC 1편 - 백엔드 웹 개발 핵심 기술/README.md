@@ -148,3 +148,114 @@ JAVA 코드, 데이터를 조회하는 리포지토리 등등 다양한 코드�
 
 - **메서드 레벨** @RequestMapping &rarr; /springmvc/v2/members
 
+
+
+### 6. 스프링 MVC - 기본 기능
+
+#### 로깅
+
+**로그 선언**
+
+```java
+private Logger log = LoggerFactory.getLogger(getClass());
+private static final Logger log = LoggerFactory.getLogger(Xxx.class)
+@Slf4j : 롬복 사용 가능
+```
+
+**로그 호출**
+
+```java
+log.trace("trace log={}", name);
+log.debug("debug log={}", name);
+log.info(" info log={}", name);
+log.warn(" warn log={}", name);
+log.error("error log={}", name);
+```
+
+**로그 레벨 설정**
+
+application.properties
+
+```
+#전체 로그 레벨 설정(기본 info)
+logging.level.root=info
+#hello.springmvc 패키지와 그 하위 로그 레벨 설정
+logging.level.hello.springmvc=debug
+```
+
+
+
+#### @RestController
+
+- **@Controller** 는 반환 값이 String 이면 뷰 이름으로 인식된다. 그래서 뷰를 찾고 뷰가 랜더링 된다.
+- **@RestController** 는 반환 값으로 뷰를 찾는 것이 아니라, HTTP 메시지 바디에 바로 입력한다. 
+
+
+
+#### @PathVariable
+
+```java
+@GetMapping("/mapping/users/{userId}/orders/{orderId}")
+public String mappingPath(@PathVariable String userId, @PathVariable Long 
+orderId) {
+ log.info("mappingPath userId={}, orderId={}", userId, orderId);
+ return "ok";
+}
+```
+
+
+
+#### @RequestParam
+
+- 파라미터 이름으로 바인딩 @RequestParam("username") String memberName
+- HTTP 파라미터 이름이 변수 이름과 같으면 @RequestParam 만 써도 됨
+- String , int , Integer 등의 단순 타입이면 @RequestParam 도 생략 가능(생략 안하는게 좋음)
+
+- ```java
+  @RequestParam(required = true, defaultValue = "guest")
+  ```
+
+
+
+#### @ModelAttribute
+
+- String , int , Integer 같은 단순 타입 = @RequestParam
+- 나머지 = @ModelAttribute
+
+
+
+#### HttpEntity
+
+- RequestEntity
+- ResponseEntity
+
+
+
+#### @RequestBody
+
+@RequestBody 를 사용하면 HTTP 메시지 바디 정보를 편리하게 조회할 수 있다.
+
+참고로 헤더 정보가 필요하다면 HttpEntity 를 사용하거나 @RequestHeader 를 사용하면 된다.
+
+이렇게 메시지 바디를 직접 조회하는 기능은 요청 파라미터를 조회하는 @RequestParam , @ModelAttribute 와는 전혀 관계가 없다
+
+
+
+#### @ResponseBody
+
+@ResponseBody 를 사용하면 응답 결과를 HTTP 메시지 바디에 직접 담아서 전달할 수 있다.
+
+물론 이 경우에도 view를 사용하지 않는다
+
+
+
+#### JSON
+
+문자로 된 JSON 데이터를 Jackson 라이브러리인 objectMapper 를 사용해서 자바 객체로 변환한다
+
+```java
+private ObjectMapper objectMapper = new ObjectMapper();
+
+HelloData data = objectMapper.readValue(messageBody, HelloData.class);
+```
+
